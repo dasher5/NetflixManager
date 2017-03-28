@@ -1,0 +1,184 @@
+html, body {
+	height: 100%;
+	width: 100%;
+  margin: 0;
+  padding: 0;
+	font-family: 'Abhaya Libre', Helvetica, Arial, sans-serif;
+}
+
+.navigation, .playlist-header {
+  width: 100%;
+  overflow: hidden;
+}
+
+.logo, .your-playlists {
+  float: left;
+}
+
+.sign_in, .sign-in a, .add span {
+  float: right;
+}
+
+.logo a, .sign-in a {
+	text-decoration: none;
+}
+
+.logo, .sign-in, .your-playlists, .add {
+  display: inline-block;
+  width: 50%;
+	padding: 2%;
+	font-size: 150%;
+}
+
+.sign-in a {
+	margin-right: 2%;
+}
+
+.your-playlists {
+	padding-left: 5%;
+}
+
+.add {
+	padding-right: 5%;
+	color: #3F875F;
+}
+
+.purpose {
+  text-align: center;
+	font-size: 200%;
+}
+
+.icons {
+    text-align: center;
+    width: 100%;
+    margin: 8% auto;
+}
+
+.icons div {
+  width: 33%;
+  float: left;
+	font-size: 150%;
+}
+
+.sign-up {
+	padding-top: 10%;
+	text-align: center;
+}
+
+form {
+	padding: 5%;
+}
+
+.form {
+	width: 40%;
+	margin: 0 auto;
+	border: 2px solid #13232f;
+}
+
+.search {
+	width: 100%;
+	text-align: center;
+}
+
+.search form {
+	padding: 0;
+}
+
+.search div {
+	display: inline-block;
+}
+
+input[type="search"] {
+	width: 500px;
+}
+
+.playlists {
+	width: 100%;
+	text-align: center;
+}
+
+.playlists div {
+	display: inline-block;
+	width: 20%;
+	float: left;
+	margin-top: 3%;
+}
+
+.playlists img {
+	width: 200px;
+	height: 200px;
+	border: 2px solid black;
+}
+
+.playlists a {
+	font-size: 150%;
+	text-decoration: none;
+}
+
+.table {
+	width: 90%;
+	margin: 0 auto;
+	font-size: 150%;
+}
+
+#main {
+  margin-bottom: 200px;
+  overflow:auto;
+	padding-bottom: 200px;}  /* must be same height as the footer */
+
+#footer {position: relative;
+	margin-top: -200px; /* negative value of footer height */
+	height: 200px;
+	clear:both;}
+
+#footer {
+  background: rgba(19, 35, 47, 0.9);
+  clear: both;
+}
+
+#footer div {
+  width: 33%;
+  float: left;
+  text-align: center;
+}
+
+#footer ul {
+  list-style: none;
+}
+
+#footer ul li a {
+    text-decoration: none;
+    color: #1ab188;
+    font-size: 150%;
+}
+
+#footer h2 {
+  margin-left: 5%;
+  color: #fff;
+}
+
+#copyright {
+    height: 75px;
+    text-align: center;
+    color: #929393;
+    line-height: 75px;
+}
+
+#col3 h2 {
+  margin-left: 15%;
+}
+
+#col3 ul {
+  text-align: center;
+}
+
+#col3 ul li {
+  width: 32px;
+  margin-left: 20px;
+  display: inline-block;
+}
+
+#footer a:link,
+#footer a:visited {
+  color: #fff;
+}
