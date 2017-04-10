@@ -1,10 +1,9 @@
 <?php
 
-include_once '../global.php';
+include_once '/var/www/NetflixManager/app/global.php';
 
 // get the identifier for the page we want to load
 $action = $_GET['action'];
-
 // instantiate a SiteController and route it
 $pc = new SiteController();
 $pc->route($action);
@@ -12,6 +11,7 @@ $pc->route($action);
 class SiteController {
 
   public function route($action) {
+ 
     switch ($action) {
       case 'home':
         $this->home();
@@ -24,13 +24,19 @@ class SiteController {
     }
     switch ($action) {
       case 'register':
+        echo "\n\nRegistering\n";
         $db = new Db();
         $fn = $db->quote($_POST['fn']);
         $ln = $db->quote($_POST['ln']);
         $em = $_POST['em'];
         $pw = $_POST['pw'];
-				$this->register($fn, $ln, $em, $pw);
+        echo "REG\n";
+        $this->sign_in();
+        echo "\n REG with $db test\n";
         break;
+
+	#$this->register($fn, $ln, $em, $pw);
+        #break;
     }
     switch ($action) {
       case 'sign_in':
@@ -59,6 +65,13 @@ class SiteController {
         $this->add_playlist();
         break;
     }
+ 
+   switch ($action)  {
+       default:
+       $this->home();
+       
+       break;
+    }
   }
 
   public function home() {
@@ -79,23 +92,22 @@ class SiteController {
     $rows = $db->select("SELECT * FROM `users` WHERE email='".$em."' and password='".$pw."'");
 
     if(count($rows) > 0) {
-      header('Location: '.BASE_URL.'/sign_up');
+      header('Location: '.BASE_URL.'sign_up');
     }
     else {
       $em = $db->quote($em);
       $pw = $db->quote($pw);
-      
-      $result = $db->register($fn, $ln, $em, $pw);
+
+      $result = $db->query("INSERT INTO `users` (`first_name`,`last_name`, `email`, `password`) VALUES (" . $fn . "," . $ln . "," . $em ."," . $pw .")");
 
       if($result) {
         $_SESSION['user'] = $fn;
         header('Location: '.BASE_URL);
       }
       else {
-        header('Location: '.BASE_URL.'/sign_up');
+        header('Location: '.BASE_URL.'sign_up');
       }
-    
-   }
+    }
   }
 
   public function sign_in() {
@@ -114,7 +126,7 @@ class SiteController {
       header('Location: '.BASE_URL);
     }
     else {
-      header('Location: '.BASE_URL.'/sign_in');
+      header('Location: '.BASE_URL.'sign_in');
     }
   }
 

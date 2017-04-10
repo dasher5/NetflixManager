@@ -41,7 +41,19 @@ class Db {
 
     // Query the database
     $result = $connection -> query($query);
+    
 
+    /* Log every query and response for debugging purposes */
+    ob_start();
+    var_dump($connection);
+    $output = ob_get_clean();
+    $outputFile = "/logs/db/output.txt";
+    $filehandle = fopen($outputFile, 'a') or die("FIle creation error.");
+    fwrite($filehandle, "\n".time()."\n".$query."\n");
+    fwrite($filehandle, $output);
+    fclose($fileHandle); 
+    /* End logging. */
+    
     return $result;
   }
 
@@ -85,5 +97,23 @@ class Db {
   public function quote($value) {
     $connection = $this -> connect();
     return "'" . $connection -> real_escape_string($value) . "'";
+  }
+
+
+  /**
+   *  Add a new user to the user database and return the result of
+   *  the query
+   *
+   * @param $fn First Name
+   * @param $ln Last Name
+   * @param $em Email
+   * @param $pw Password
+   */
+  public function register($fn, $ln, $em, $pw) {
+
+    $rand = rand(); /* Please don't be a duplicate */
+    $query = "INSERT into users (id, first_name, last_name, email, password) VALUES (".$rand.", ".$fn.", ".$ln.", ".$em.", ".$pw.");";
+
+    return $this -> query($query);
   }
 }
