@@ -11,5 +11,14 @@ RewriteRule ^register/?$ app/controller/siteController.php?action=register [QSA,
 RewriteRule ^sign_in/?$ app/controller/siteController.php?action=sign_in [QSA,L]
 RewriteRule ^process_sign_in/?$ app/controller/siteController.php?action=process_sign_in [QSA,L]
 RewriteRule ^sign_out/?$ app/controller/siteController.php?action=sign_out [QSA,L]
-RewriteRule ^playlist/?$ app/controller/siteController.php?action=playlist [QSA,L]
 RewriteRule ^add_playlist/?$ app/controller/siteController.php?action=add_playlist [QSA,L]
+RewriteRule ^create_playlist/?$ app/controller/siteController.php?action=create_playlist [QSA,L]
+RewriteRule ^search/?$ app/controller/siteController.php?action=search [QSA,L]
+
+RewriteRule ^add_to_playlist/([0-9]+)/([0-9]+)/(.*)$/?$ app/controller/siteController.php?action=add_to_playlist&playlist_id=$1&content_id=$2&title=$3 [QSA,L]
+RewriteRule ^playlist/([0-9]+)$/?$ app/controller/siteController.php?action=playlist&playlist_id=$1 [QSA,L]
+RewriteRule ^content_preview/([0-9]+)$/?$ app/controller/siteController.php?action=content_preview&content_id=$1 [QSA,L]
+
+
+RewriteRule ^script/?$ app/controller/siteController.php?action=script [QSA,L]
+

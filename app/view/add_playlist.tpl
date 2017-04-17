@@ -1,6 +1,6 @@
 
 <div class="search">
-  <form action="#" method="post">
+  <form action="<?= BASE_URL ?>/process_sign_in" method="post">
       <div class="form-group">
         <input type="search" class="form-control" name="search" required>
       </div>
@@ -11,10 +11,10 @@
 </div>
 
 <div class="form">
-  <form action="#" method="post">
+  <form action="<?= BASE_URL ?>/create_playlist" method="post">
     <div class="form-group">
       <label for="name">Playlist Name</label>
-      <input type="text" class="form-control" name="fn" required>
+      <input type="text" class="form-control" name="playlist_name" required>
     </div>
 
     <input class="btn btn-primary" type="submit" name="submit" value="Create Playlist">

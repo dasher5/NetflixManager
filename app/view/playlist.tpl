@@ -4,7 +4,7 @@
     <span>American Dad</span>
   </div>
   <div class="add">
-    <button type="button" class="btn btn-primary" style="float: right;">Shuffle</button>
+    <button id="shuffle" type="button" class="btn btn-primary" style="float: right;">Shuffle</button>
   </div>
 </div>
 
@@ -20,28 +20,24 @@
         </tr>
     </thead>
     <tbody>
+      <?php for($i = 0; $i < count($rows); $i++) { ?>
         <tr>
-            <th scope="row">+</th>
-            <td><a target="#" href="http://netflix.com/watch/70236132">Season 1</a></td>
+            <th scope="row">
+              <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">+</button>
+                <ul class="dropdown-menu">
+                  <?php for($j = 0; $j < count($playlists); $j++) { ?>
+                        <li><a href="<?= BASE_URL ?>/add_to_playlist/<?= $playlists[$j]['playlist_id'] ?>/<?= $rows[$i]['content_id'] ?>/<?= $rows[$i]['title'] ?>"><?= $playlists[$j]['playlist_name'] ?></a></li>
+                  <?php  } ?>
+                </ul>
+              </div>
+            </th>
+            <td><a target="#" class="content-links" id="<?= $rows[$i]['content_id'] ?>" href="http://netflix.com/watch/<?= $rows[$i]['content_id'] ?>"><?= $rows[$i]['title'] ?></a></td>
             <td>TV-MA</td>
             <td>2005</td>
             <td>3 hours</td>
         </tr>
-        <tr>
-            <th scope="row">+</th>
-            <td><a target="#" href="http://netflix.com/watch/70236133">Season 2</a></td>
-            <td>TV-MA</td>
-            <td>2006</td>
-            <td>3 hours</td>
-        </tr>
-        <tr>
-            <th scope="row">+</th>
-            <td><a target="#" href="http://netflix.com/watch/70236132">Season 3</a></td>
-            <td>TV-MA</td>
-            <td>2007</td>
-            <td>3 hours</td>
-        </tr>
-
+      <?php } ?>
     </tbody>
 </table>
 

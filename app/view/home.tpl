@@ -22,9 +22,9 @@
   <?php } else { ?>
 
   <div class="search">
-    <form action="<?= BASE_URL ?>/process_sign_in" method="post">
+    <form action="<?= BASE_URL ?>/search" method="post">
         <div class="form-group">
-          <input type="search" class="form-control" name="search" required>
+          <input type="search" class="form-control" name="search_query" required>
         </div>
         <div>
           <input class="btn btn-primary" type="submit" name="submit" value="Search">
@@ -32,40 +32,24 @@
     </form>
   </div>
 
+  <!-- <a href="<?= BASE_URL ?>/script">run script</a> -->
+
   <div class "playlist-container">
     <div class="playlist-header">
       <div class="your-playlists">
         <span>Your Playlists</span>
       </div>
       <div class="add">
-        <a href="<?= BASE_URL ?>/add_playlist?id=<?php  ?>"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+        <a href="<?= BASE_URL ?>/add_playlist"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
       </div>
     </div>
     <div class="playlists">
-      <div id="playlist-1">
-        <a href="<?= BASE_URL ?>/playlist"><img src="http://cdn1.nflximg.net/images/4937/8904937.jpg"></br></a>
-        <a href="<?= BASE_URL ?>/playlist">American Dad</a>
-      </div>
-      <div id="playlist-2">
-        <a href="#"><img src="http://cdn0.nflximg.net/images/7596/3827596.jpg"></br></a>
-        <a href="#">Caillou</a>
-      </div>
-      <div id="playlist-3">
-        <a href="#"><img src="http://cdn1.nflximg.net/images/6439/1096439.jpg"></br></a>
-        <a href="#">Documentaries</a>
-      </div>
-      <div id="playlist-4">
-        <a href="#"><img src="http://cdn0.nflximg.net/images/4100/3694100.jpg"></br></a>
-        <a href="#">Mystery</a>
-      </div>
-      <div id="playlist-5">
-        <a href="#"><img src="http://cdn1.nflximg.net/images/3237/3743237.jpg"></br></a>
-        <a href="#">My Little Pony</a>
-      </div>
-      <div id="playlist-6">
-        <a href="#"><img src="http://cdn1.nflximg.net/images/3083/11673083.jpg"></br></a>
-        <a href="#">Thriller</a>
-      </div>
+      <?php for($i = 0; $i < count($rows); $i++) { ?>
+        <div class="playlist_preview">
+          <a href="<?= BASE_URL ?>/playlist/<?= $rows[$i]['playlist_id'] ?>"><img src=""></br></a>
+          <a href="<?= BASE_URL ?>/playlist/<?= $rows[$i]['playlist_id'] ?>"><?= $rows[$i]['playlist_name'] ?></a>
+        </div>
+      <?php } ?>
     </div>
   </div>
   <?php } ?>
