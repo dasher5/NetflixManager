@@ -202,8 +202,9 @@ class SiteController {
 
     $user_id = $db->quote($rows[0]['id']);
     $playlist_name = $db->quote($playlist_name);
+    $playlist_id = rand();
 
-    $result = $db->query("INSERT INTO `playlists` (`user_id`,`playlist_name`) VALUES (" . $user_id . "," . $playlist_name . ")");
+    $result = $db->query("INSERT INTO `playlists` (`playlist_id`,`user_id`,`playlist_name`) VALUES (" . $playlist_id . "," . $user_id . "," . $playlist_name . ")");
 
     if($result) {
       header('Location: '.BASE_URL);
