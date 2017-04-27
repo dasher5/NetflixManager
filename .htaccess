@@ -18,7 +18,7 @@ RewriteRule ^search/?$ app/controller/siteController.php?action=search [QSA,L]
 RewriteRule ^add_to_playlist/([0-9]+)/([0-9]+)/(.*)$/?$ app/controller/siteController.php?action=add_to_playlist&playlist_id=$1&content_id=$2&title=$3 [QSA,L]
 RewriteRule ^playlist/([0-9]+)$/?$ app/controller/siteController.php?action=playlist&playlist_id=$1 [QSA,L]
 RewriteRule ^content_preview/([0-9]+)$/?$ app/controller/siteController.php?action=content_preview&content_id=$1 [QSA,L]
+RewriteRule ^delete_item/([0-9]+)/([0-9]+)$/?$ app/controller/siteController.php?action=delete_item&playlist_id=$1&content_id=$2 [QSA,L]
 
 
 RewriteRule ^script/?$ app/controller/siteController.php?action=script [QSA,L]
-
