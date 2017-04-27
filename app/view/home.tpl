@@ -24,7 +24,7 @@
   <div class="search">
     <form action="<?= BASE_URL ?>/search" method="post">
         <div class="form-group">
-          <input type="search" class="form-control" name="search_query" required>
+          <input type="search" class="form-control" name="search_query">
         </div>
         <div>
           <input class="btn btn-primary" type="submit" name="submit" value="Search">
@@ -44,9 +44,13 @@
       </div>
     </div>
     <div class="playlists">
-      <?php for($i = 0; $i < count($rows); $i++) { ?>
+      <?php for($i = 0, $j = 0; $i < count($rows); $i++) { ?>
         <div class="playlist_preview">
-          <a href="<?= BASE_URL ?>/playlist/<?= $rows[$i]['playlist_id'] ?>"><img src=""></br></a>
+          <?php if(count($rows2[$i]) > 0) { ?>
+            <a href="<?= BASE_URL ?>/playlist/<?= $rows[$i]['playlist_id'] ?>"><img src="<?= $artwork[$j][0]['artwork'] ?>"></br></a>
+          <?php $j++;} else { ?>
+            <a href="<?= BASE_URL ?>/playlist/<?= $rows[$i]['playlist_id'] ?>"><img src=""></br></a>
+          <?php } ?>
           <a href="<?= BASE_URL ?>/playlist/<?= $rows[$i]['playlist_id'] ?>"><?= $rows[$i]['playlist_name'] ?></a>
         </div>
       <?php } ?>

@@ -75,26 +75,43 @@ class SiteController {
         $this->content_preview($content_id);
         break;
 
-      // case 'script':
-      //   $db = new Db();
-      //
-      //   $files = scandir('json/');
-      //   foreach($files as $file) {
-      //     $str = file_get_contents('json/'.$file.'');
-      //     $json = json_decode($str, true);
-      //
-      //     if($json['video']['type'] == 'movie') {
-      //       $movie_id = $db->quote($json['video']['id']);
-      //       $title = $db->quote($json['video']['title']);
-      //       $rating = $db->quote($json['video']['rating']);
-      //       $year = $db->quote($json['video']['year']);
-      //       $length = $db->quote($json['video']['runtime']);
-      //       $synopsis = $db->quote($json['video']['synopsis']);
-      //       $artwork = $db->quote($json['video']['boxart'][1]['url']);
-      //
-      //       $result = $db->query("INSERT INTO `movies` (`movie_id`,`title`,`rating`,`year`,`length`,`synopsis`,`artwork`) VALUES (" . $movie_id . "," . $title . "," . $rating . "," . $year . "," . $length . "," . $synopsis . "," . $artwork . ")");
-      //     }
-      //   }
+      case 'delete_item':
+        $playlist_id = $_GET['playlist_id'];
+        $content_id = $_GET['content_id'];
+        $this->delete_item($playlist_id, $content_id );
+
+      case 'script':
+        // $db = new Db();
+        //
+        // $files = scandir('json/');
+        // foreach($files as $file) {
+        //   $str = file_get_contents('json/'.$file.'');
+        //   $json = json_decode($str, true);
+        //
+        //
+        //   $content_id = $db->quote($json['video']['id']);
+        //   $title = $db->quote($json['video']['title']);
+        //   $rating = $db->quote($json['video']['rating']);
+        //   $year = $db->quote($json['video']['seasons'][0]['year']);
+        //
+        //   $l = 0;
+        //   if($json['video']['type'] == 'show') {
+        //     for($i = 0; $i < count($json['video']['seasons']); $i++) {
+        //       for($j = 0; $j < count($json['video']['seasons'][$i]['episodes']); $j++)
+        //         $l += $json['video']['seasons'][$i]['episodes'][$j]['runtime'];
+        //     }
+        //   }
+        //   else {
+        //     $l = $json['video']['runtime'];
+        //   }
+        //
+        //   $length = $db->quote($l);
+        //
+        //   $synopsis = $db->quote($json['video']['synopsis']);
+        //   $artwork = $db->quote($json['video']['boxart'][1]['url']);
+        //
+        //   $result = $db->query("INSERT INTO `content` (`content_id`,`title`,`rating`,`year`,`length`,`synopsis`,`artwork`) VALUES (" . $content_id . "," . $title . "," . $rating . "," . $year . "," . $length . "," . $synopsis . "," . $artwork . ")");
+        // }
 
     }
   }
@@ -107,6 +124,23 @@ class SiteController {
       $user_id = $rows[0]['id'];
 
       $rows = $db->select("SELECT * FROM `playlists` WHERE user_id='".$user_id."'");
+      $rows2 = [];
+
+      for($i = 0; $i < count($rows); $i++) {
+        $id = $rows[$i]['playlist_id'];
+        $rows2[$i] = $db->select("SELECT * FROM `playlist_content` WHERE playlist_id='".$id."'");
+      }
+
+      $artwork = [];
+
+      for($i = 0, $j = 0; $i < count($rows2); $i++) {
+        if(count($rows2[$i]) > 0) {
+          $id = $rows2[$i][0]['content_id'];
+          $artwork[$j] = $db->select("SELECT * FROM `content` WHERE content_id='".$id."'");
+          $j++;
+        }
+      }
+
     }
 
     include_once SYSTEM_PATH.'/view/header.tpl';
@@ -123,10 +157,6 @@ class SiteController {
   public function register($fn, $ln, $em, $pw) {
     $db = new Db();
 
-    if($db) {
-      header('Location: '.BASE_URL);
-    }
-    else {
     $rows = $db->select("SELECT * FROM `users` WHERE email='".$em."' and password='".$pw."'");
 
     if(count($rows) > 0) {
@@ -147,7 +177,6 @@ class SiteController {
         header('Location: '.BASE_URL.'/sign_up');
       }
     }
-  }
   }
 
   public function sign_in() {
@@ -181,12 +210,53 @@ class SiteController {
     $db = new Db();
 
     $rows = $db->select("SELECT * FROM `playlist_content` WHERE playlist_id='".$playlist_id."'");
+    $name = $db->select("SELECT * FROM `playlists` WHERE playlist_id='".$playlist_id."'");
+    $rows2 = [];
+
+    for($i = 0; $i < count($rows); $i++) {
+      $id = $rows[$i]['content_id'];
+      $rows2[$i] = $db->select("SELECT * FROM `content` WHERE content_id='".$id."'");
+      $rows2[$i][0]['length'] = $this->seconds_to_time($rows2[$i][0]['length']);
+    }
+
     $user = $db->select("SELECT * FROM `users` WHERE email='".$_SESSION['user']."'");
     $playlists = $db->select("SELECT * FROM `playlists` WHERE user_id='".$user[0]['id']."'");
 
     include_once SYSTEM_PATH.'/view/header.tpl';
     include_once SYSTEM_PATH.'/view/playlist.tpl';
     include_once SYSTEM_PATH.'/view/footer.tpl';
+  }
+
+  public function seconds_to_time($seconds){
+     // extract hours
+    $hours = floor($seconds / (60 * 60));
+
+    // extract minutes
+    $divisor_for_minutes = $seconds % (60 * 60);
+    $minutes = floor($divisor_for_minutes / 60);
+
+    // extract the remaining seconds
+    $divisor_for_seconds = $divisor_for_minutes % 60;
+    $seconds = ceil($divisor_for_seconds);
+
+    //create string HH:MM:SS
+    $ret = "";
+    if($hours > 0)
+      $ret = $hours.":";
+
+    if($minutes <= 9)
+      $ret = $ret."0".$minutes;
+    else
+      $ret = $ret."".$minutes;
+
+    if($seconds > 9) {
+      $ret = $ret.":".$seconds;
+      return($ret);
+    }
+    else {
+      $ret = $ret.":0".$seconds;
+      return($ret);
+    }
   }
 
   public function add_playlist() {
@@ -202,9 +272,8 @@ class SiteController {
 
     $user_id = $db->quote($rows[0]['id']);
     $playlist_name = $db->quote($playlist_name);
-    $playlist_id = rand();
 
-    $result = $db->query("INSERT INTO `playlists` (`playlist_id`,`user_id`,`playlist_name`) VALUES (" . $playlist_id . "," . $user_id . "," . $playlist_name . ")");
+    $result = $db->query("INSERT INTO `playlists` (`user_id`,`playlist_name`) VALUES (" . $user_id . "," . $playlist_name . ")");
 
     if($result) {
       header('Location: '.BASE_URL);
@@ -217,7 +286,11 @@ class SiteController {
   public function search($query) {
     $db = new Db();
 
-    $rows = $db->select("SELECT * FROM `movies` WHERE title LIKE CONCAT('%', '".$query."', '%')");
+    $rows;
+    if($query === '')
+      $rows = $db->select("SELECT * FROM `content`");
+    else
+      $rows = $db->select("SELECT * FROM `content` WHERE title LIKE CONCAT('%', '".$query."', '%')");
 
     if(count($rows) > 0 ) {
       $user = $db->select("SELECT * FROM `users` WHERE email='".$_SESSION['user']."'");
@@ -252,11 +325,20 @@ class SiteController {
   public function content_preview($content_id) {
       $db = new Db();
 
-      $rows = $db->select("SELECT * FROM `movies` WHERE content_id='".$content_id."'");
+      $rows = $db->select("SELECT * FROM `content` WHERE content_id='".$content_id."'");
 
       if(count($rows) > 0 ) {
         $user = $db->select("SELECT * FROM `users` WHERE email='".$_SESSION['user']."'");
         $playlists = $db->select("SELECT * FROM `playlists` WHERE user_id='".$user[0]['id']."'");
+
+        if($rows[0]['length'] > 0)
+          $rows[0]['length'] = $this->seconds_to_time($rows[0]['length']);
+        else {
+          $rows[0]['length'] = "N/A";
+        }
+
+        if($rows[0]['year'] < 1)
+          $rows[0]['year'] = "N/A";
 
         include_once SYSTEM_PATH.'/view/header.tpl';
         include_once SYSTEM_PATH.'/view/content.tpl';
@@ -265,6 +347,20 @@ class SiteController {
       else {
         echo "failed";
       }
+  }
+
+  public function delete_item($playlist_id, $content_id) {
+    $db = new Db();
+
+    $result = $db->query("DELETE FROM `playlist_content` WHERE playlist_id='".$playlist_id."' and content_id='".$content_id."'");
+
+    if($result) {
+      $this->playlist($playlist_id);
+    }
+    else {
+      echo "failed to delete item";
+    }
+
   }
 
 }

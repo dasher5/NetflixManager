@@ -1,8 +1,8 @@
 
 <div class="search">
-  <form action="<?= BASE_URL ?>/process_sign_in" method="post">
+  <form action="<?= BASE_URL ?>/search" method="post">
       <div class="form-group">
-        <input type="search" class="form-control" name="search" required>
+        <input type="search" class="form-control" name="search_query">
       </div>
       <div>
         <input class="btn btn-primary" type="submit" name="submit" value="Search">
