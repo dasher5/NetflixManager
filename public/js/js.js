@@ -4,11 +4,21 @@
 $(document).ready(function() {
   var shuffle_btn = document.getElementById('shuffle');
   var links = document.getElementsByClassName("content-links");
-  var i = 0;
+  var lengths = document.getElementsByClassName("length");
 
-  shuffle_btn.addEventListener('click', function(event) {
-    launchShow(links[i].id, 5000);
-  });
+
+  if(links.length > 0) {
+    shuffle_btn.addEventListener('click', function(event) {
+      var i = getRandomInt(0, links.length);
+      launchShow(links[i].id);
+    });
+  }
+
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
 
 
   //Launches a netflix show by ID, Not yet integrated (3/29/2017)
@@ -21,24 +31,26 @@ $(document).ready(function() {
     var child = window.open( URL, '_blank');
 
     //Will close the window after Duration has elapsed
+    /*
     window.setTimeout( function closeWindow() {
       if (!child.closed)  {
         //console.log('Closing the child...');
         child.close();
       }
     }, Duration);
+    */
 
     //Starts listening for the window to close, checks every 1000ms
+    /*
     window.setTimeout( function checkClosed() {
       if (child.closed)  {
         closeDetected();
-        i+=1;
-        launchShow(links[i].id, 5000)
       }
       else  {
         setTimeout(checkClosed, 1000);
       }
     }, 1000);
+    */
   }
 
   //Stub method for when it is detected that the child is closed

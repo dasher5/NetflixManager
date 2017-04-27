@@ -23,10 +23,20 @@ html, body {
 	text-decoration: none;
 }
 
+a {
+	color: #1ab188;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1ab188 !important;
+    border-color: #1ab188 !important;
+}
+
 .logo, .sign-in, .your-playlists, .add {
   display: inline-block;
   width: 50%;
-	padding: 2%;
+	padding: 1%;
 	font-size: 150%;
 }
 
@@ -46,6 +56,8 @@ html, body {
 .purpose {
   text-align: center;
 	font-size: 200%;
+	font-weight: 700;
+	margin-top: 2%;
 }
 
 .icons {
@@ -71,12 +83,15 @@ form {
 
 .form {
 	width: 40%;
-	margin: 0 auto;
-	border: 2px solid #13232f;
+	margin: 4% auto;
+	border: 2px solid #fff;
+	background-color: #fff;
+	box-shadow: 0 4px 2px -2px #DEE2E2;
 }
 
 .search {
 	width: 100%;
+	margin-top: 2%;
 	text-align: center;
 }
 
@@ -121,7 +136,12 @@ input[type="search"] {
 	font-size: 150%;
 }
 
+#main, #copyright {
+	background-color: #F3F6F6;
+}
+
 #main {
+	/*#1ab188*/
   margin-bottom: 200px;
   overflow:auto;
 	padding-bottom: 200px;}  /* must be same height as the footer */
@@ -132,7 +152,8 @@ input[type="search"] {
 	clear:both;}
 
 #footer {
-  background: rgba(19, 35, 47, 0.9);
+  /*background: rgba(19, 35, 47, 0.9);*/
+	box-shadow: 0 4px 2px -2px #DEE2E2;
   clear: both;
 }
 
@@ -154,13 +175,13 @@ input[type="search"] {
 
 #footer h2 {
   margin-left: 5%;
-  color: #fff;
+  /*color: #fff;*/
 }
 
 #copyright {
     height: 75px;
     text-align: center;
-    color: #929393;
+    /*color: #929393;*/
     line-height: 75px;
 }
 
@@ -180,5 +201,5 @@ input[type="search"] {
 
 #footer a:link,
 #footer a:visited {
-  color: #fff;
+  color: #1ab188;
 }
