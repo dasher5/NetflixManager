@@ -28,7 +28,7 @@
     </div>
 
     <div id="copyright">
-      &copy;2017 <span><a href="#">Netflix Shuffler</a></span>, All Rights Reserved. Not officially affiliated with Netflix.
+      &copy;2017 <span><a href="#">Netflix Manager</a></span>, All Rights Reserved. Not officially affiliated with Netflix.
     </div>
 
   </body>
