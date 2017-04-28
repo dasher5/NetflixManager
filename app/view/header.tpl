@@ -20,12 +20,12 @@
   <body>
     <div class="navigation">
         <div class="logo">
-          <a href="<?= BASE_URL ?>">LOGO</a>
+          <a href="<?= BASE_URL ?>">Netflix Manager</a>
         </div>
         <div class="sign-in">
 					<?php if (isset($_SESSION['user'])) { ?>
           	<a href="<?= BASE_URL ?>/sign_out">Sign Out</a>
-						<a href="#">My Account</a>
+						<a href="<?= BASE_URL ?>/my_account/<?= $user_id ?>">My Account</a>
 					<?php } else { ?>
 						<a href="<?= BASE_URL ?>/sign_in">Sign In</a>
 					<?php } ?>
