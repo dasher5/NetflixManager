@@ -79,6 +79,37 @@ class SiteController {
         $playlist_id = $_GET['playlist_id'];
         $content_id = $_GET['content_id'];
         $this->delete_item($playlist_id, $content_id );
+        break;
+
+      case 'edit':
+        $playlist_name = $_POST['playlist_name'];
+        $playlist_id = $_GET['playlist_id'];
+        $this->edit($playlist_id, $playlist_name);
+        break;
+
+      case 'delete_playlist':
+        $playlist_id = $_GET['playlist_id'];
+        $this->delete_playlist($playlist_id);
+        break;
+
+      case 'my_account':
+        $user_id = $_GET['user_id'];
+        $this->my_account($user_id);
+        break;
+
+      case 'change_password':
+        $user_id = $_GET['user_id'];
+        $current_pw = $_POST['current_pw'];
+        $new_pw = $_POST['new_pw'];
+        $retype_pw = $_POST['retype_pw'];
+        $this->change_password($user_id, $current_pw, $new_pw, $retype_pw);
+        break;
+
+      case 'delete_account':
+        $user_id = $_GET['user_id'];
+        $pw = $_POST['pw'];
+        $this->delete_account($user_id, $pw);
+        break;
 
       case 'script':
         // $db = new Db();
@@ -361,6 +392,79 @@ class SiteController {
       echo "failed to delete item";
     }
 
+  }
+
+  public function edit($playlist_id, $playlist_name) {
+    $db = new Db();
+
+    $result = $db->query("UPDATE `playlists` SET playlist_name='".$playlist_name."' WHERE playlist_id=".$playlist_id);
+    if($result)
+      header('Location: '.BASE_URL.'/playlist'.'/'.$playlist_id);
+    else {
+      echo $playlist_name;
+    }
+  }
+
+  public function delete_playlist($playlist_id) {
+    $db = new Db();
+
+    $result = $db->query("DELETE FROM `playlists` WHERE playlist_id=".$playlist_id);
+    $result2 = $db->query("DELETE FROM `playlist_content` WHERE playlist_id=".$playlist_id);
+
+    if($result && $result2)
+      header('Location: '.BASE_URL);
+    else
+      echo $playlist_id;
+  }
+
+  public function my_account($user_id) {
+    include_once SYSTEM_PATH.'/view/header.tpl';
+    include_once SYSTEM_PATH.'/view/my_account.tpl';
+    include_once SYSTEM_PATH.'/view/footer.tpl';
+  }
+
+  public function change_password($user_id, $current_pw, $new_pw, $retype_pw) {
+    $db = new Db();
+
+    $rows = $db->select("SELECT * FROM `users` WHERE id='".$user_id."'");
+
+    if($rows[0]['password'] == $current_pw) {
+      if($new_pw === $retype_pw) {
+        $result = $db->query("UPDATE `users` SET password='".$new_pw."' WHERE id=".$user_id);
+        if($result)
+          header('Location: '.BASE_URL);
+        else {
+          echo "failed to change password";
+        }
+      }
+      else {
+        echo "passwords don't match";
+      }
+    }
+    else {
+      echo "wrong password";
+    }
+  }
+
+  public function delete_account($user_id, $pw) {
+    $db = new Db();
+
+    $rows = $db->select("SELECT * FROM `users` WHERE id='".$user_id."'");
+
+    if($rows[0]['password'] == $pw) {
+      $result = $db->query("DELETE FROM `playlists` WHERE user_id=".$user_id);
+      $result2 = $db->query("DELETE FROM `users` WHERE id=".$user_id);
+
+      if($result && $result2) {
+        $this->sign_out();
+      }
+      else {
+        echo "failed to delete account";
+      }
+    }
+    else {
+      echo "wrong password";
+    }
   }
 
 }

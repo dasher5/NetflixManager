@@ -1,4 +1,4 @@
-<h2 style="margin-left: 2%;"><?= count($rows) ?> results</h2>
+<h2 style="margin-left: 2%;"><?= count($rows) ?> result(s)</h2>
 
 <div class="search">
   <form action="<?= BASE_URL ?>/search" method="post">
