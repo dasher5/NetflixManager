@@ -19,6 +19,11 @@ RewriteRule ^add_to_playlist/([0-9]+)/([0-9]+)/(.*)$/?$ app/controller/siteContr
 RewriteRule ^playlist/([0-9]+)$/?$ app/controller/siteController.php?action=playlist&playlist_id=$1 [QSA,L]
 RewriteRule ^content_preview/([0-9]+)$/?$ app/controller/siteController.php?action=content_preview&content_id=$1 [QSA,L]
 RewriteRule ^delete_item/([0-9]+)/([0-9]+)$/?$ app/controller/siteController.php?action=delete_item&playlist_id=$1&content_id=$2 [QSA,L]
+RewriteRule ^edit/([0-9]+)$/?$ app/controller/siteController.php?action=edit&playlist_id=$1 [QSA,L]
+RewriteRule ^delete_playlist/([0-9]+)$/?$ app/controller/siteController.php?action=delete_playlist&playlist_id=$1 [QSA,L]
+RewriteRule ^my_account/([0-9]+)$/?$ app/controller/siteController.php?action=my_account&user_id=$1 [QSA,L]
+RewriteRule ^change_password/([0-9]+)$/?$ app/controller/siteController.php?action=change_password&user_id=$1 [QSA,L]
+RewriteRule ^delete_account/([0-9]+)$/?$ app/controller/siteController.php?action=delete_account&user_id=$1 [QSA,L]
 
 
 RewriteRule ^script/?$ app/controller/siteController.php?action=script [QSA,L]
