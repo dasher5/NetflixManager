@@ -25,5 +25,9 @@ RewriteRule ^my_account/([0-9]+)$/?$ app/controller/siteController.php?action=my
 RewriteRule ^change_password/([0-9]+)$/?$ app/controller/siteController.php?action=change_password&user_id=$1 [QSA,L]
 RewriteRule ^delete_account/([0-9]+)$/?$ app/controller/siteController.php?action=delete_account&user_id=$1 [QSA,L]
 
+RewriteRule ^contact/?$ app/controller/siteController.php?action=contact [QSA,L]
+RewriteRule ^terms/?$ app/controller/siteController.php?action=terms [QSA,L]
+RewriteRule ^privacy/?$ app/controller/siteController.php?action=privacy [QSA,L]
+
 
 RewriteRule ^script/?$ app/controller/siteController.php?action=script [QSA,L]

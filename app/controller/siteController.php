@@ -111,6 +111,18 @@ class SiteController {
         $this->delete_account($user_id, $pw);
         break;
 
+      case 'contact':
+        $this->contact();
+        break;
+
+      case 'terms':
+        $this->terms();
+        break;
+
+      case 'privacy':
+        $this->privacy();
+        break;
+
       case 'script':
         // $db = new Db();
         //
@@ -465,6 +477,24 @@ class SiteController {
     else {
       echo "wrong password";
     }
+  }
+
+  public function contact() {
+    include_once SYSTEM_PATH.'/view/header.tpl';
+    include_once SYSTEM_PATH.'/view/contact.tpl';
+    include_once SYSTEM_PATH.'/view/footer.tpl';
+  }
+
+  public function terms() {
+    include_once SYSTEM_PATH.'/view/header.tpl';
+    include_once SYSTEM_PATH.'/view/terms.tpl';
+    include_once SYSTEM_PATH.'/view/footer.tpl';
+  }
+
+  public function privacy() {
+    include_once SYSTEM_PATH.'/view/header.tpl';
+    include_once SYSTEM_PATH.'/view/privacy.tpl';
+    include_once SYSTEM_PATH.'/view/footer.tpl';
   }
 
 }
